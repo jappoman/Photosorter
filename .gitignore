@@ -1,10 +1,7 @@
-/itchio
-/places_to_replace.txt
-/dist
-/config.cfg
 /__pycache__
-/build/Photosorter
-/generate_executable_command.txt
-/icon.ico
-/Photosorter.spec
-/resources_qr.py
+/itchio
+/build
+/config/config.cfg
+/config/places_to_replace.txt
+/dist
+/generate_exec
