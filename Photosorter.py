@@ -266,46 +266,35 @@ def main(app_instance):
         #at the end, if the progression is not truly 100%, set it manually
         app_instance.progressbar.setValue(100)
         #re-enabling gui
-        app_instance.textbox_sourcedir.setEnabled(True)
-        app_instance.button_sourcedir.setEnabled(True)
-        app_instance.textbox_destdir.setEnabled(True)
-        app_instance.button_destdir.setEnabled(True)
-        app_instance.textbox_placesfilepath.setEnabled(True)
-        app_instance.button_placesfilepath.setEnabled(True)
-        app_instance.textbox_homelat.setEnabled(True)
-        app_instance.textbox_homelon.setEnabled(True)
-        app_instance.textbox_xpsace.setEnabled(True)
-        app_instance.textbox_ypsace.setEnabled(True)
-        app_instance.textbox_zpsace.setEnabled(True)
-        app_instance.textbox_xtime.setEnabled(True)
-        app_instance.textbox_ytime.setEnabled(True)
-        app_instance.textbox_ztime.setEnabled(True)
-        app_instance.button_start.setEnabled(True)
-        app_instance.button_cfg.setEnabled(True)
-        app_instance.check_dictionarymode.setEnabled(True)
-        app_instance.check_movefile.setEnabled(True)
-        #setting a "done" message in the progressbox area
+        ui_elements = [
+            app_instance.textbox_sourcedir, app_instance.button_sourcedir,
+            app_instance.textbox_destdir, app_instance.button_destdir,
+            app_instance.textbox_placesfilepath, app_instance.button_placesfilepath,
+            app_instance.textbox_homelat, app_instance.textbox_homelon,
+            app_instance.textbox_xpsace, app_instance.textbox_ypsace, app_instance.textbox_zpsace,
+            app_instance.textbox_xtime, app_instance.textbox_ytime, app_instance.textbox_ztime,
+            app_instance.button_start, app_instance.check_dictionarymode, app_instance.check_movefile
+        ]
+
+        for element in ui_elements:
+            element.setEnabled(True)
+
         app_instance.label_progress.setText("Done")
 
     else:
-        app_instance.textbox_sourcedir.setEnabled(True)
-        app_instance.button_sourcedir.setEnabled(True)
-        app_instance.textbox_destdir.setEnabled(True)
-        app_instance.button_destdir.setEnabled(True)
-        app_instance.textbox_placesfilepath.setEnabled(True)
-        app_instance.button_placesfilepath.setEnabled(True)
-        app_instance.textbox_homelat.setEnabled(True)
-        app_instance.textbox_homelon.setEnabled(True)
-        app_instance.textbox_xpsace.setEnabled(True)
-        app_instance.textbox_ypsace.setEnabled(True)
-        app_instance.textbox_zpsace.setEnabled(True)
-        app_instance.textbox_xtime.setEnabled(True)
-        app_instance.textbox_ytime.setEnabled(True)
-        app_instance.textbox_ztime.setEnabled(True)
-        app_instance.button_start.setEnabled(True)
-        app_instance.button_cfg.setEnabled(True)
-        app_instance.check_dictionarymode.setEnabled(True)
-        app_instance.check_movefile.setEnabled(True)
+        ui_elements = [
+            app_instance.textbox_sourcedir, app_instance.button_sourcedir,
+            app_instance.textbox_destdir, app_instance.button_destdir,
+            app_instance.textbox_placesfilepath, app_instance.button_placesfilepath,
+            app_instance.textbox_homelat, app_instance.textbox_homelon,
+            app_instance.textbox_xpsace, app_instance.textbox_ypsace, app_instance.textbox_zpsace,
+            app_instance.textbox_xtime, app_instance.textbox_ytime, app_instance.textbox_ztime,
+            app_instance.button_start, app_instance.check_dictionarymode, app_instance.check_movefile
+        ]
+
+        for element in ui_elements:
+            element.setEnabled(True)
+
         app_instance.label_progress.setText("No source or destination directory specified")
 
 
@@ -314,13 +303,16 @@ def main(app_instance):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication([])
     
     # Carica la configurazione
     config = ConfigManager().config
     
     # Crea l'istanza dell'applicazione e passa la configurazione
     ex = App(config)
+
+    ex.show()
+    app.exec_()
 
     # Connetti il segnale alla funzione principale
     ex.startSortingSignal.connect(lambda: main(ex))
