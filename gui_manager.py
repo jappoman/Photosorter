@@ -242,14 +242,6 @@ class App(QMainWindow):
         self.check_movefile.resize(default_check_x_size, default_widget_y_size)
         self.check_movefile.move(default_spacing, default_spacing * 20)
 
-        # reload cfg button
-        self.button_cfg = QPushButton("Reload config file", self)
-        self.button_cfg.resize(load_cfg_x_size, default_widget_y_size)
-        self.button_cfg.move(
-            window_xsize - load_cfg_x_size - default_spacing, default_spacing * 18
-        )
-        self.button_cfg.clicked.connect(self.on_click_reloadcfg)
-
         # start button
         self.button_start = QPushButton("Start sorting", self)
         self.button_start.resize(startbutton_x_size, startbutton_y_size)
@@ -324,22 +316,6 @@ class App(QMainWindow):
         self.check_movefile.setEnabled(False)
         self.button_cfg.setEnabled(False)
         self.startSortingSignal.emit()
-
-    def on_click_reloadcfg(self):
-        # reload config from configuration file
-        self.textbox_sourcedir.setText(self.config.get("Directories", "source_dir"))
-        self.textbox_destdir.setText(self.config.get("Directories", "destination_dir"))
-        self.textbox_placesfilepath.setText(
-            self.config.get("Places", "places_file_path")
-        )
-        self.textbox_homelat.setText(self.config.get("Home", "home_lat"))
-        self.textbox_homelon.setText(self.config.get("Home", "home_lon"))
-        self.textbox_xpsace.setText(self.config.get("Space", "x_space"))
-        self.textbox_ypsace.setText(self.config.get("Space", "y_space"))
-        self.textbox_zpsace.setText(self.config.get("Space", "z_space"))
-        self.textbox_xtime.setText(self.config.get("Time", "x_time"))
-        self.textbox_ytime.setText(self.config.get("Time", "y_time"))
-        self.textbox_ztime.setText(self.config.get("Time", "z_time"))
 
     def on_click_sourcedir_button(self):
         # set source dir from dialog
