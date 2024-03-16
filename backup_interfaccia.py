@@ -70,6 +70,12 @@
         self.button_destdir.move(default_spacing + dirbox_x_size, default_spacing * 4)
         self.button_destdir.clicked.connect(self.on_click_destdir_button)
 
+
+
+
+
+
+
         # Create textbox for places dictiorary file
         # label
         self.label_placesfilepath = QLabel(self)

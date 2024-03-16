@@ -35,12 +35,33 @@ class App(QMainWindow):
         scrollLayout = QVBoxLayout(scrollContent)
         scrollContent.setLayout(scrollLayout)
 
-        # Aggiungi i tuoi widget a scrollLayout...
-        # Esempio: aggiungere una QLabel
-        labelExample = QLabel("This is an example label", scrollContent)
-        scrollLayout.addWidget(labelExample)
+        # Source directory
+        scrollLayout.addWidget(QLabel("Insert source directory path:"))
+        scrollLayout.addWidget(QLineEdit().setPlaceholderText("Source directory path"))
+        textbox_sourcedir = QLineEdit()
+        textbox_sourcedir.setPlaceholderText("Source directory path")
+        scrollLayout.addWidget(textbox_sourcedir)
+        button_sourcedir = QPushButton("...")
+        scrollLayout.addWidget(button_sourcedir)
+        button_sourcedir.clicked.connect(self.on_click_sourcedir_button)
+
+        # Destination directory
+        scrollLayout.addWidget(QLabel("Insert destination directory path:"))
+        scrollLayout.addWidget(QLineEdit().setPlaceholderText("Destination directory path"))
+        textbox_destdir = QLineEdit()
+        textbox_destdir.setPlaceholderText("Destination directory path")
+        scrollLayout.addWidget(textbox_destdir)
+        button_destdir = QPushButton("...")
+        scrollLayout.addWidget(button_destdir)
+        button_destdir.clicked.connect(self.on_click_destdir_button)
 
         # Aggiungi altri widget qui...
+
+
+        
+
+
+
 
         scroll.setWidget(scrollContent)
         mainLayout.addWidget(scroll)
