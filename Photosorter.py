@@ -42,14 +42,17 @@ def main(app_instance):
     #places file path
     if (app_instance.textbox_placesfilepath.text()!=''):
         places_file_path = app_instance.textbox_placesfilepath.text()
-        places_file = open(places_file_path, 'r')
-        place_list = []
-        auxiliaryPlacesList = []
-        places_to_replace = {}
-        for line in places_file:
-            k, v = line.strip().split('=')
-            places_to_replace[k.strip()] = v.strip()
-        places_file.close()
+        try:
+            places_file = open(places_file_path, 'r')
+            place_list = []
+            auxiliaryPlacesList = []
+            places_to_replace = {}
+            for line in places_file:
+                k, v = line.strip().split('=')
+                places_to_replace[k.strip()] = v.strip()
+            places_file.close()
+        except Exception as e:
+            print(f"Errore nell'apertura o nella lettura del file '{places_file_path}': {e}")
     else:
         places_to_replace = {}
     #dictionary mode
