@@ -36,37 +36,40 @@ class App(QMainWindow):
         scrollContent.setLayout(scrollLayout)
 
         # Source directory layout
-        scrollLayout.addWidget(QLabel("Insert source directory path:"))
-        sourceLayout = QHBoxLayout()  # Layout orizzontale per la directory sorgente
+        groupSourceDirectoryPath = QGroupBox("Source directory path")  # Gruppo con titolo
+        horizontalSourceLayout = QHBoxLayout()  # Layout orizzontale per la directory sorgente
         textbox_sourcedir = QLineEdit()
-        textbox_sourcedir.setPlaceholderText("Source directory path")
-        sourceLayout.addWidget(textbox_sourcedir)  # Aggiunge la casella di testo al layout orizzontale
+        textbox_sourcedir.setPlaceholderText("Insert source directory path")
+        horizontalSourceLayout.addWidget(textbox_sourcedir)  # Aggiunge la casella di testo al layout orizzontale
         button_sourcedir = QPushButton("...")
-        sourceLayout.addWidget(button_sourcedir)  # Aggiunge il bottone al layout orizzontale
-        scrollLayout.addLayout(sourceLayout)  # Aggiunge il layout orizzontale al layout principale
         button_sourcedir.clicked.connect(self.on_click_sourcedir_button)
+        horizontalSourceLayout.addWidget(button_sourcedir)  # Aggiunge il bottone al layout orizzontale
+        groupSourceDirectoryPath.setLayout(horizontalSourceLayout)  # Imposta il layout del gruppo
+        scrollLayout.addWidget(groupSourceDirectoryPath)  # Aggiungi il gruppo al layout principale
 
         # Destination directory layout
-        scrollLayout.addWidget(QLabel("Insert destination directory path:"))
-        destLayout = QHBoxLayout()  # Layout orizzontale per la directory di destinazione
+        groupDestinationDirectoryPath = QGroupBox("Destination directory path")  # Gruppo con titolo
+        horizontalDestinationLayout = QHBoxLayout()  # Layout orizzontale per la directory di destinazione
         textbox_destdir = QLineEdit()
-        textbox_destdir.setPlaceholderText("Destination directory path")
-        destLayout.addWidget(textbox_destdir)  # Aggiunge la casella di testo al layout orizzontale
+        textbox_destdir.setPlaceholderText("Insert destination directory path")
+        horizontalDestinationLayout.addWidget(textbox_destdir)  # Aggiunge la casella di testo al layout orizzontale
         button_destdir = QPushButton("...")
-        destLayout.addWidget(button_destdir)  # Aggiunge il bottone al layout orizzontale
-        scrollLayout.addLayout(destLayout)  # Aggiunge il layout orizzontale al layout principale
         button_destdir.clicked.connect(self.on_click_destdir_button)
+        horizontalDestinationLayout.addWidget(button_destdir)  # Aggiunge il bottone al layout orizzontale
+        groupDestinationDirectoryPath.setLayout(horizontalDestinationLayout)
+        scrollLayout.addWidget(groupDestinationDirectoryPath)  # Aggiunge il layout orizzontale al layout principale
 
         # Places directory layout
-        scrollLayout.addWidget(QLabel("Insert known places file path:"))
-        placesLayout = QHBoxLayout()  # Layout orizzontale per il file dei places
+        groupKnownPlacesPath = QGroupBox("Known places file path")  # Gruppo con titolo
+        horizontalPlacesLayout = QHBoxLayout()  # Layout orizzontale per il file dei places
         textbox_placespath = QLineEdit()
-        textbox_placespath.setPlaceholderText("Known places file path")
-        placesLayout.addWidget(textbox_placespath)  # Aggiunge la casella di testo al layout orizzontale
+        textbox_placespath.setPlaceholderText("Insert known places file path")
+        horizontalPlacesLayout.addWidget(textbox_placespath)  # Aggiunge la casella di testo al layout orizzontale
         button_placespath = QPushButton("...")
-        placesLayout.addWidget(button_placespath)  # Aggiunge il bottone al layout orizzontale
-        scrollLayout.addLayout(placesLayout)  # Aggiunge il layout orizzontale al layout principale
         button_placespath.clicked.connect(self.on_click_placesfilepath_button)
+        horizontalPlacesLayout.addWidget(button_placespath)  # Aggiunge il bottone al layout orizzontale
+        groupKnownPlacesPath.setLayout(horizontalPlacesLayout)
+        scrollLayout.addWidget(groupKnownPlacesPath)  # Aggiunge il layout orizzontale al layout principale
 
         # Home Location section
         groupBoxHomeLocation = QGroupBox("Home Location")  # Gruppo con titolo
