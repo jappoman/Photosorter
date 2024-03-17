@@ -70,12 +70,6 @@
         self.button_destdir.move(default_spacing + dirbox_x_size, default_spacing * 4)
         self.button_destdir.clicked.connect(self.on_click_destdir_button)
 
-
-
-
-
-
-
         # Create textbox for places dictiorary file
         # label
         self.label_placesfilepath = QLabel(self)
@@ -118,6 +112,10 @@
         self.textbox_homelon.setPlaceholderText("Home location (longitude)")
         self.textbox_homelon.resize(homeloc_x_size, default_widget_y_size)
         self.textbox_homelon.move(default_padding_center + 5, default_spacing * 8)
+
+
+
+
 
         # Create textbox for X space
         # label
