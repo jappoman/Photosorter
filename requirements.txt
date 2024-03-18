@@ -1,1 +1,3 @@
 geopy
+PyQt5
+pillow
