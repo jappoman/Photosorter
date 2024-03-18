@@ -102,6 +102,9 @@ class App(QMainWindow):
         groupBoxHomeLocation.setLayout(homeLocationLayout)
         scrollLayout.addWidget(groupBoxHomeLocation)
 
+        # Space and time options section
+        optionsLayout = QHBoxLayout()
+
         # Space Options section
         # Create text boxes with placeholder text
         textbox_xspace = self.create_line_edit("2")
@@ -116,7 +119,7 @@ class App(QMainWindow):
         ySpaceLayout = self.create_horizontal_layout([label_yspace, textbox_yspace])
         zSpaceLayout = self.create_horizontal_layout([label_zspace, textbox_zspace])
         # Create the explanation label
-        spaceExplanationLabel = QLabel("Pics far away X kms from each others and Y kms away from home are put together.\nZ are the kms away from home where to start the calculation about space.")
+        spaceExplanationLabel = QLabel("Pics far away X kms from each others\n and Y kms away from home are put together.\nZ are the kms away from home where to start the calculation\n about space.")
         # Create the vertical layout and add the explanation label and the three horizontal layouts
         spaceOptionsLayout = QVBoxLayout()
         spaceOptionsLayout.addWidget(spaceExplanationLabel)
@@ -126,7 +129,6 @@ class App(QMainWindow):
         # Create the group box for the space options section and add it to the scroll layout
         groupBoxSpaceOptions = QGroupBox("Space Options")
         groupBoxSpaceOptions.setLayout(spaceOptionsLayout)
-        scrollLayout.addWidget(groupBoxSpaceOptions)
 
         # Time Options section
         # Create text boxes with placeholder text for time options
@@ -142,7 +144,7 @@ class App(QMainWindow):
         yTimeLayout = self.create_horizontal_layout([label_ytime, textbox_ytime])
         zTimeLayout = self.create_horizontal_layout([label_ztime, textbox_ztime])
         # Create the explanation label for the time options
-        timeExplanationLabel = QLabel("Pics far away X seconds from each others and Y kms away from home are put together.\nZ are the seconds when to start the calculation about time.")
+        timeExplanationLabel = QLabel("Pics far away X seconds from each others\n and Y kms away from home are put together.\nZ are the seconds when to start the calculation\n about time.")
         # Create the vertical layout and add the explanation label and the horizontal layouts for time options
         timeOptionsLayout = QVBoxLayout()
         timeOptionsLayout.addWidget(timeExplanationLabel)
@@ -152,8 +154,16 @@ class App(QMainWindow):
         # Create the group box for the time options section and add it to the scroll layout
         groupBoxTimeOptions = QGroupBox("Time Options")
         groupBoxTimeOptions.setLayout(timeOptionsLayout)
-        scrollLayout.addWidget(groupBoxTimeOptions)
 
+        # Aggiungere entrambi i groupBox al layout orizzontale
+        optionsLayout.addWidget(groupBoxSpaceOptions)
+        optionsLayout.addWidget(groupBoxTimeOptions)
+        
+
+        # Creare un widget contenitore per il layout orizzontale
+        optionsContainer = QWidget()
+        optionsContainer.setLayout(optionsLayout)
+        scrollLayout.addWidget(optionsContainer)
 
         # Checkbox Options section refactored
         groupBoxCheckOptions = QGroupBox("Additional Options")
@@ -188,7 +198,7 @@ class App(QMainWindow):
         mainLayout.addWidget(scroll)
 
         # Ridimensionabile e reattivo
-        self.setMinimumSize(640, 480)  # Imposta una dimensione minima per la finestra principale
+        self.setMinimumSize(640, 768)  # Imposta una dimensione minima per la finestra principale
 
     def closeEvent(self, event):
         # when closing, kill the program
