@@ -77,12 +77,12 @@ class App(QMainWindow):
         latLayout = QHBoxLayout()
         latLayout.addWidget(QLabel("Latitude:"))
         textbox_homelat = QLineEdit()
-        textbox_homelat.setPlaceholderText("Home location (latitude)")
+        textbox_homelat.setPlaceholderText("Insert home location latitude")
         latLayout.addWidget(textbox_homelat)
         lonLayout = QHBoxLayout()
         lonLayout.addWidget(QLabel("Longitude:"))
         textbox_homelon = QLineEdit()
-        textbox_homelon.setPlaceholderText("Home location (longitude)")
+        textbox_homelon.setPlaceholderText("Insert home location longitude")
         lonLayout.addWidget(textbox_homelon)
         # Aggiungi i layout di latitudine e longitudine al layout del gruppo
         homeLocationLayout.addLayout(latLayout)
@@ -90,43 +90,62 @@ class App(QMainWindow):
         groupBoxHomeLocation.setLayout(homeLocationLayout)  # Imposta il layout del gruppo
         scrollLayout.addWidget(groupBoxHomeLocation)  # Aggiungi il gruppo al layout principale
 
-        # Space explaination
-        scrollLayout.addWidget(QLabel("Pics far away X kms from each others and Y kms away from home are put together.\nZ are the kms away from home where to start the calculation about space."))
 
-        # Space layout
-        spaceLayout = QHBoxLayout()
-        spaceLayout.addWidget(QLabel("(X) kms between pics:"))
-        textbox_xpsace = QLineEdit()
-        textbox_xpsace.setPlaceholderText("2")
-        spaceLayout.addWidget(textbox_xpsace)
-        spaceLayout.addWidget(QLabel("(Y) kms from home:"))
-        textbox_ypsace = QLineEdit()
-        textbox_ypsace.setPlaceholderText("10")
-        spaceLayout.addWidget(textbox_ypsace)
-        spaceLayout.addWidget(QLabel("(Z) kms where to start:"))
-        textbox_zpsace = QLineEdit()
-        textbox_zpsace.setPlaceholderText("1")
-        spaceLayout.addWidget(textbox_zpsace)
-        scrollLayout.addLayout(spaceLayout)
 
-        # Time explaination
-        scrollLayout.addWidget(QLabel("Pics far away X seconds from each others and Y kms away from home are put together.\nZ are the seconds when to start the calculation about time."))
+        # Space Options section aggiornata
+        groupBoxSpaceOptions = QGroupBox("Space Options")
+        spaceOptionsLayout = QVBoxLayout()
 
-        # Time layout
-        timeLayout = QHBoxLayout()
-        timeLayout.addWidget(QLabel("(X) sec between pics:"))
+        # Descrizione dello spazio
+        spaceExplanationLabel = QLabel("Pics far away X kms from each others and Y kms away from home are put together.\nZ are the kms away from home where to start the calculation about space.")
+        spaceOptionsLayout.addWidget(spaceExplanationLabel)
+
+        # Campi X, Y, Z su una riga
+        spaceFieldsLayout = QHBoxLayout()
+        spaceFieldsLayout.addWidget(QLabel("(X) kms between pics:"))
+        textbox_xspace = QLineEdit()
+        textbox_xspace.setPlaceholderText("2")
+        spaceFieldsLayout.addWidget(textbox_xspace)
+        spaceFieldsLayout.addWidget(QLabel("(Y) kms from home:"))
+        textbox_yspace = QLineEdit()
+        textbox_yspace.setPlaceholderText("10")
+        spaceFieldsLayout.addWidget(textbox_yspace)
+        spaceFieldsLayout.addWidget(QLabel("(Z) kms where to start:"))
+        textbox_zspace = QLineEdit()
+        textbox_zspace.setPlaceholderText("1")
+        spaceFieldsLayout.addWidget(textbox_zspace)
+
+        spaceOptionsLayout.addLayout(spaceFieldsLayout)
+        groupBoxSpaceOptions.setLayout(spaceOptionsLayout)
+        scrollLayout.addWidget(groupBoxSpaceOptions)
+
+        # Time Options section aggiornata
+        groupBoxTimeOptions = QGroupBox("Time Options")
+        timeOptionsLayout = QVBoxLayout()
+
+        # Descrizione del tempo
+        timeExplanationLabel = QLabel("Pics far away X seconds from each others and Y kms away from home are put together.\nZ are the seconds when to start the calculation about time.")
+        timeOptionsLayout.addWidget(timeExplanationLabel)
+
+        # Campi X, Y, Z su una riga
+        timeFieldsLayout = QHBoxLayout()
+        timeFieldsLayout.addWidget(QLabel("(X) sec between pics:"))
         textbox_xtime = QLineEdit()
         textbox_xtime.setPlaceholderText("3600")
-        timeLayout.addWidget(textbox_xtime)
-        timeLayout.addWidget(QLabel("(Y) kms from home:"))
+        timeFieldsLayout.addWidget(textbox_xtime)
+        timeFieldsLayout.addWidget(QLabel("(Y) kms from home:"))
         textbox_ytime = QLineEdit()
         textbox_ytime.setPlaceholderText("10")
-        timeLayout.addWidget(textbox_ytime)
-        timeLayout.addWidget(QLabel("(Z) sec when to start:"))
+        timeFieldsLayout.addWidget(textbox_ytime)
+        timeFieldsLayout.addWidget(QLabel("(Z) sec when to start:"))
         textbox_ztime = QLineEdit()
         textbox_ztime.setPlaceholderText("3600")
-        timeLayout.addWidget(textbox_ztime)
-        scrollLayout.addLayout(timeLayout)
+        timeFieldsLayout.addWidget(textbox_ztime)
+
+        timeOptionsLayout.addLayout(timeFieldsLayout)
+        groupBoxTimeOptions.setLayout(timeOptionsLayout)
+        scrollLayout.addWidget(groupBoxTimeOptions)
+
 
 
 
@@ -134,7 +153,7 @@ class App(QMainWindow):
         # Aggiungi altri widget qui...
 
 
-        
+
 
 
 
@@ -145,7 +164,7 @@ class App(QMainWindow):
         # Ridimensionabile e reattivo
         self.setMinimumSize(640, 480)  # Imposta una dimensione minima per la finestra principale
 
-        
+
 
     def closeEvent(self, event):
         # when closing, kill the program
