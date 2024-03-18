@@ -17,154 +17,178 @@ class App(QMainWindow):
         self.config = config
         self.initUI()
 
+    def create_line_edit(self, placeholder_text):
+        textbox = QLineEdit()
+        textbox.setPlaceholderText(placeholder_text)
+        return textbox
+
+    def create_button(self, click_event):
+        button = QPushButton("...")
+        button.clicked.connect(click_event)
+        return button
+
+    def create_group_box(self, title, layout):
+        group_box = QGroupBox(title)
+        group_box.setLayout(layout)
+        return group_box
+    
+    def create_horizontal_layout(self, widgets):
+        layout = QHBoxLayout()
+        for widget in widgets:
+            layout.addWidget(widget)
+        return layout
+
+    def create_vertical_layout(self, widgets):
+        layout = QVBoxLayout()
+        for widget in widgets:
+            layout.addWidget(widget)
+        return layout
+
     def initUI(self):
-        self.setWindowTitle("Photosorter v2.0")
+        self.setWindowTitle("Photosorter")
         self.setWindowIcon(QIcon(":/icon.ico"))
 
-        # Utilizza QVBoxLayout e QHBoxLayout per organizzare i widget
         centralWidget = QWidget(self)
         self.setCentralWidget(centralWidget)
         mainLayout = QVBoxLayout(centralWidget)
 
-        # Scroll Area
         scroll = QScrollArea(self)
         scroll.setWidgetResizable(True)
         scrollContent = QWidget(scroll)
-
-        # Scroll Area Layout
         scrollLayout = QVBoxLayout(scrollContent)
         scrollContent.setLayout(scrollLayout)
 
         # Source directory layout
-        groupSourceDirectoryPath = QGroupBox("Source directory path")  # Gruppo con titolo
-        horizontalSourceLayout = QHBoxLayout()  # Layout orizzontale per la directory sorgente
-        textbox_sourcedir = QLineEdit()
-        textbox_sourcedir.setPlaceholderText("Insert source directory path")
-        horizontalSourceLayout.addWidget(textbox_sourcedir)  # Aggiunge la casella di testo al layout orizzontale
-        button_sourcedir = QPushButton("...")
-        button_sourcedir.clicked.connect(self.on_click_sourcedir_button)
-        horizontalSourceLayout.addWidget(button_sourcedir)  # Aggiunge il bottone al layout orizzontale
-        groupSourceDirectoryPath.setLayout(horizontalSourceLayout)  # Imposta il layout del gruppo
-        scrollLayout.addWidget(groupSourceDirectoryPath)  # Aggiungi il gruppo al layout principale
+        textbox_sourcedir = self.create_line_edit("Insert source directory path")
+        button_sourcedir = self.create_button(self.on_click_sourcedir_button)
+        horizontalSourceLayout = self.create_horizontal_layout([textbox_sourcedir, button_sourcedir])
+        groupSourceDirectoryPath = self.create_group_box("Source directory path", horizontalSourceLayout)
+        scrollLayout.addWidget(groupSourceDirectoryPath)
 
         # Destination directory layout
-        groupDestinationDirectoryPath = QGroupBox("Destination directory path")  # Gruppo con titolo
-        horizontalDestinationLayout = QHBoxLayout()  # Layout orizzontale per la directory di destinazione
-        textbox_destdir = QLineEdit()
-        textbox_destdir.setPlaceholderText("Insert destination directory path")
-        horizontalDestinationLayout.addWidget(textbox_destdir)  # Aggiunge la casella di testo al layout orizzontale
-        button_destdir = QPushButton("...")
-        button_destdir.clicked.connect(self.on_click_destdir_button)
-        horizontalDestinationLayout.addWidget(button_destdir)  # Aggiunge il bottone al layout orizzontale
-        groupDestinationDirectoryPath.setLayout(horizontalDestinationLayout)
-        scrollLayout.addWidget(groupDestinationDirectoryPath)  # Aggiunge il layout orizzontale al layout principale
+        textbox_destdir = self.create_line_edit("Insert destination directory path")
+        button_destdir = self.create_button(self.on_click_destdir_button)
+        horizontalDestinationLayout = self.create_horizontal_layout([textbox_destdir, button_destdir])
+        groupDestinationDirectoryPath = self.create_group_box("Destination directory path", horizontalDestinationLayout)
+        scrollLayout.addWidget(groupDestinationDirectoryPath)
 
-        # Places directory layout
-        groupKnownPlacesPath = QGroupBox("Known places file path")  # Gruppo con titolo
-        horizontalPlacesLayout = QHBoxLayout()  # Layout orizzontale per il file dei places
-        textbox_placespath = QLineEdit()
-        textbox_placespath.setPlaceholderText("Insert known places file path")
-        horizontalPlacesLayout.addWidget(textbox_placespath)  # Aggiunge la casella di testo al layout orizzontale
-        button_placespath = QPushButton("...")
-        button_placespath.clicked.connect(self.on_click_placesfilepath_button)
-        horizontalPlacesLayout.addWidget(button_placespath)  # Aggiunge il bottone al layout orizzontale
-        groupKnownPlacesPath.setLayout(horizontalPlacesLayout)
-        scrollLayout.addWidget(groupKnownPlacesPath)  # Aggiunge il layout orizzontale al layout principale
+        # Known places file path
+        textbox_placespath = self.create_line_edit("Insert known places file path")
+        button_placespath = self.create_button(self.on_click_placesfilepath_button)
+        horizontalPlacesLayout = self.create_horizontal_layout([textbox_placespath, button_placespath])
+        groupKnownPlacesPath = self.create_group_box("Known places file path", horizontalPlacesLayout)
+        scrollLayout.addWidget(groupKnownPlacesPath)
 
         # Home Location section
-        groupBoxHomeLocation = QGroupBox("Home Location")  # Gruppo con titolo
-        homeLocationLayout = QVBoxLayout()  # QVBoxLayout per gli elementi interni
+        # Create the latitude and longitude line edits
+        textbox_homelat = self.create_line_edit("Insert home location latitude")
+        textbox_homelon = self.create_line_edit("Insert home location longitude")
+        # Create the labels for latitude and longitude
+        label_lat = QLabel("Latitude:")
+        label_lon = QLabel("Longitude:")
+        # Create horizontal layouts for latitude and longitude
         latLayout = QHBoxLayout()
-        latLayout.addWidget(QLabel("Latitude:"))
-        textbox_homelat = QLineEdit()
-        textbox_homelat.setPlaceholderText("Insert home location latitude")
+        latLayout.addWidget(label_lat)
         latLayout.addWidget(textbox_homelat)
         lonLayout = QHBoxLayout()
-        lonLayout.addWidget(QLabel("Longitude:"))
-        textbox_homelon = QLineEdit()
-        textbox_homelon.setPlaceholderText("Insert home location longitude")
+        lonLayout.addWidget(label_lon)
         lonLayout.addWidget(textbox_homelon)
-        # Aggiungi i layout di latitudine e longitudine al layout del gruppo
+        # Create the vertical layout and add the horizontal layouts
+        homeLocationLayout = QVBoxLayout()
         homeLocationLayout.addLayout(latLayout)
         homeLocationLayout.addLayout(lonLayout)
-        groupBoxHomeLocation.setLayout(homeLocationLayout)  # Imposta il layout del gruppo
-        scrollLayout.addWidget(groupBoxHomeLocation)  # Aggiungi il gruppo al layout principale
+        # Create the group box for the home location section and add it to the scroll layout
+        groupBoxHomeLocation = QGroupBox("Home Location")
+        groupBoxHomeLocation.setLayout(homeLocationLayout)
+        scrollLayout.addWidget(groupBoxHomeLocation)
 
-
-
-        # Space Options section aggiornata
-        groupBoxSpaceOptions = QGroupBox("Space Options")
-        spaceOptionsLayout = QVBoxLayout()
-
-        # Descrizione dello spazio
+        # Space Options section
+        # Create text boxes with placeholder text
+        textbox_xspace = self.create_line_edit("2")
+        textbox_yspace = self.create_line_edit("10")
+        textbox_zspace = self.create_line_edit("1")
+        # Create labels for each text box
+        label_xspace = QLabel("(X) kms between pics:")
+        label_yspace = QLabel("(Y) kms from home:")
+        label_zspace = QLabel("(Z) kms where to start:")
+        # Create horizontal layouts for each set of label and text box
+        xSpaceLayout = self.create_horizontal_layout([label_xspace, textbox_xspace])
+        ySpaceLayout = self.create_horizontal_layout([label_yspace, textbox_yspace])
+        zSpaceLayout = self.create_horizontal_layout([label_zspace, textbox_zspace])
+        # Create the explanation label
         spaceExplanationLabel = QLabel("Pics far away X kms from each others and Y kms away from home are put together.\nZ are the kms away from home where to start the calculation about space.")
+        # Create the vertical layout and add the explanation label and the three horizontal layouts
+        spaceOptionsLayout = QVBoxLayout()
         spaceOptionsLayout.addWidget(spaceExplanationLabel)
-
-        # Campi X, Y, Z su una riga
-        spaceFieldsLayout = QHBoxLayout()
-        spaceFieldsLayout.addWidget(QLabel("(X) kms between pics:"))
-        textbox_xspace = QLineEdit()
-        textbox_xspace.setPlaceholderText("2")
-        spaceFieldsLayout.addWidget(textbox_xspace)
-        spaceFieldsLayout.addWidget(QLabel("(Y) kms from home:"))
-        textbox_yspace = QLineEdit()
-        textbox_yspace.setPlaceholderText("10")
-        spaceFieldsLayout.addWidget(textbox_yspace)
-        spaceFieldsLayout.addWidget(QLabel("(Z) kms where to start:"))
-        textbox_zspace = QLineEdit()
-        textbox_zspace.setPlaceholderText("1")
-        spaceFieldsLayout.addWidget(textbox_zspace)
-
-        spaceOptionsLayout.addLayout(spaceFieldsLayout)
+        spaceOptionsLayout.addLayout(xSpaceLayout)
+        spaceOptionsLayout.addLayout(ySpaceLayout)
+        spaceOptionsLayout.addLayout(zSpaceLayout)
+        # Create the group box for the space options section and add it to the scroll layout
+        groupBoxSpaceOptions = QGroupBox("Space Options")
         groupBoxSpaceOptions.setLayout(spaceOptionsLayout)
         scrollLayout.addWidget(groupBoxSpaceOptions)
 
-        # Time Options section aggiornata
-        groupBoxTimeOptions = QGroupBox("Time Options")
-        timeOptionsLayout = QVBoxLayout()
-
-        # Descrizione del tempo
+        # Time Options section
+        # Create text boxes with placeholder text for time options
+        textbox_xtime = self.create_line_edit("3600")
+        textbox_ytime = self.create_line_edit("10")
+        textbox_ztime = self.create_line_edit("3600")
+        # Create labels for each time option
+        label_xtime = QLabel("(X) sec between pics:")
+        label_ytime = QLabel("(Y) kms from home:")
+        label_ztime = QLabel("(Z) sec when to start:")
+        # Create horizontal layouts for each set of label and text box
+        xTimeLayout = self.create_horizontal_layout([label_xtime, textbox_xtime])
+        yTimeLayout = self.create_horizontal_layout([label_ytime, textbox_ytime])
+        zTimeLayout = self.create_horizontal_layout([label_ztime, textbox_ztime])
+        # Create the explanation label for the time options
         timeExplanationLabel = QLabel("Pics far away X seconds from each others and Y kms away from home are put together.\nZ are the seconds when to start the calculation about time.")
+        # Create the vertical layout and add the explanation label and the horizontal layouts for time options
+        timeOptionsLayout = QVBoxLayout()
         timeOptionsLayout.addWidget(timeExplanationLabel)
-
-        # Campi X, Y, Z su una riga
-        timeFieldsLayout = QHBoxLayout()
-        timeFieldsLayout.addWidget(QLabel("(X) sec between pics:"))
-        textbox_xtime = QLineEdit()
-        textbox_xtime.setPlaceholderText("3600")
-        timeFieldsLayout.addWidget(textbox_xtime)
-        timeFieldsLayout.addWidget(QLabel("(Y) kms from home:"))
-        textbox_ytime = QLineEdit()
-        textbox_ytime.setPlaceholderText("10")
-        timeFieldsLayout.addWidget(textbox_ytime)
-        timeFieldsLayout.addWidget(QLabel("(Z) sec when to start:"))
-        textbox_ztime = QLineEdit()
-        textbox_ztime.setPlaceholderText("3600")
-        timeFieldsLayout.addWidget(textbox_ztime)
-
-        timeOptionsLayout.addLayout(timeFieldsLayout)
+        timeOptionsLayout.addLayout(xTimeLayout)
+        timeOptionsLayout.addLayout(yTimeLayout)
+        timeOptionsLayout.addLayout(zTimeLayout)
+        # Create the group box for the time options section and add it to the scroll layout
+        groupBoxTimeOptions = QGroupBox("Time Options")
         groupBoxTimeOptions.setLayout(timeOptionsLayout)
         scrollLayout.addWidget(groupBoxTimeOptions)
 
 
+        # Checkbox Options section refactored
+        groupBoxCheckOptions = QGroupBox("Additional Options")
+        checkOptionsLayout = QVBoxLayout()
+        # Directly add checkboxes to the layout
+        self.check_dictionarymode = QCheckBox("Create known places dictionary only")
+        checkOptionsLayout.addWidget(self.check_dictionarymode)
+        self.check_movefile = QCheckBox("Move files instead of copy (faster!)")
+        checkOptionsLayout.addWidget(self.check_movefile)
+        # Set layout to the group box and add it to the scroll layout
+        groupBoxCheckOptions.setLayout(checkOptionsLayout)
+        scrollLayout.addWidget(groupBoxCheckOptions)
+        # Actions section refactored
+        actionGroup = QGroupBox("Sorting Actions")
+        actionLayout = QVBoxLayout()
+        # Add start button, progress bar, and progress label to the action layout
+        self.button_start = QPushButton("Start sorting")
+        self.button_start.clicked.connect(self.on_click_start)
+        actionLayout.addWidget(self.button_start)
+        self.progressbar = QProgressBar()
+        self.progressbar.setValue(0)
+        actionLayout.addWidget(self.progressbar)
+        self.label_progress = QLabel('Press "Start sorting" to begin')
+        self.label_progress.setWordWrap(True)
+        actionLayout.addWidget(self.label_progress)
+        # Set layout to the action group and add it to the scroll layout
+        actionGroup.setLayout(actionLayout)
+        scrollLayout.addWidget(actionGroup)
 
-
-
-        # Aggiungi altri widget qui...
-
-
-
-
-
-
-
+        # Add the scroll area to the main layout
         scroll.setWidget(scrollContent)
         mainLayout.addWidget(scroll)
 
         # Ridimensionabile e reattivo
         self.setMinimumSize(640, 480)  # Imposta una dimensione minima per la finestra principale
-
-
 
     def closeEvent(self, event):
         # when closing, kill the program
