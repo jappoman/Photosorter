@@ -31,7 +31,7 @@ class App(QMainWindow):
         group_box = QGroupBox(title)
         group_box.setLayout(layout)
         return group_box
-    
+
     def create_horizontal_layout(self, widgets):
         layout = QHBoxLayout()
         for widget in widgets:
@@ -86,21 +86,19 @@ class App(QMainWindow):
         # Create the labels for latitude and longitude
         label_lat = QLabel("Latitude:")
         label_lon = QLabel("Longitude:")
-        # Create horizontal layouts for latitude and longitude
-        latLayout = QHBoxLayout()
-        latLayout.addWidget(label_lat)
-        latLayout.addWidget(textbox_homelat)
-        lonLayout = QHBoxLayout()
-        lonLayout.addWidget(label_lon)
-        lonLayout.addWidget(textbox_homelon)
-        # Create the vertical layout and add the horizontal layouts
-        homeLocationLayout = QVBoxLayout()
-        homeLocationLayout.addLayout(latLayout)
-        homeLocationLayout.addLayout(lonLayout)
+
+        # Create a single horizontal layout to contain both the latitude and longitude layouts
+        homeLocationLayout = QHBoxLayout()
+        homeLocationLayout.addWidget(label_lat)
+        homeLocationLayout.addWidget(textbox_homelat)
+        homeLocationLayout.addWidget(label_lon)
+        homeLocationLayout.addWidget(textbox_homelon)
+
         # Create the group box for the home location section and add it to the scroll layout
         groupBoxHomeLocation = QGroupBox("Home Location")
         groupBoxHomeLocation.setLayout(homeLocationLayout)
         scrollLayout.addWidget(groupBoxHomeLocation)
+
 
         # Space and time options section
         optionsLayout = QHBoxLayout()
@@ -158,7 +156,7 @@ class App(QMainWindow):
         # Aggiungere entrambi i groupBox al layout orizzontale
         optionsLayout.addWidget(groupBoxSpaceOptions)
         optionsLayout.addWidget(groupBoxTimeOptions)
-        
+
 
         # Creare un widget contenitore per il layout orizzontale
         optionsContainer = QWidget()
@@ -198,7 +196,7 @@ class App(QMainWindow):
         mainLayout.addWidget(scroll)
 
         # Ridimensionabile e reattivo
-        self.setMinimumSize(640, 768)  # Imposta una dimensione minima per la finestra principale
+        self.setMinimumSize(850, 480)  # Imposta una dimensione minima per la finestra principale
 
     def closeEvent(self, event):
         # when closing, kill the program
