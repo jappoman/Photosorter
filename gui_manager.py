@@ -16,6 +16,13 @@ class App(QMainWindow):
         super().__init__()
         self.config = config
         self.initUI()
+        self.applyConfigDefaults()
+
+    def applyConfigDefaults(self):
+        # Applica i valori di configurazione ai widget
+        sourcedir_default = self.config.get('Directories', 'source_dir', fallback="Insert source directory path")
+        self.textbox_sourcedir.setText(sourcedir_default)
+        # Ripeti per gli altri widget secondo necessità
 
     def create_line_edit(self, placeholder_text):
         textbox = QLineEdit()
@@ -59,9 +66,9 @@ class App(QMainWindow):
         scrollContent.setLayout(scrollLayout)
 
         # Source directory layout
-        textbox_sourcedir = self.create_line_edit("Insert source directory path")
-        button_sourcedir = self.create_button(self.on_click_sourcedir_button)
-        horizontalSourceLayout = self.create_horizontal_layout([textbox_sourcedir, button_sourcedir])
+        self.textbox_sourcedir = self.create_line_edit("Insert source directory path")
+        self.button_sourcedir = self.create_button(self.on_click_sourcedir_button)
+        horizontalSourceLayout = self.create_horizontal_layout([self.textbox_sourcedir, self.button_sourcedir])
         groupSourceDirectoryPath = self.create_group_box("Source directory path", horizontalSourceLayout)
         scrollLayout.addWidget(groupSourceDirectoryPath)
 
