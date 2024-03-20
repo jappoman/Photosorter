@@ -20,9 +20,28 @@ class App(QMainWindow):
 
     def applyConfigDefaults(self):
         # Applica i valori di configurazione ai widget
-        sourcedir_default = self.config.get('Directories', 'source_dir', fallback="Insert source directory path")
+        sourcedir_default = self.config.get('Directories', 'source_dir', fallback="./source")
         self.textbox_sourcedir.setText(sourcedir_default)
-        # Ripeti per gli altri widget secondo necessità
+        destdir_default = self.config.get('Directories', 'destination_dir', fallback="./destination")
+        self.textbox_destdir.setText(destdir_default)
+        placespath_default = self.config.get('Places', 'places_file_path', fallback="./known_places.txt")
+        self.textbox_placespath.setText(placespath_default)
+        homelat_default = self.config.get('Home', 'home_lat', fallback="0")
+        self.textbox_homelat.setText(homelat_default)
+        homelon_default = self.config.get('Home', 'home_lon', fallback="0")
+        self.textbox_homelon.setText(homelon_default)
+        xspace_default = self.config.get('Space', 'x_space', fallback="2")
+        self.textbox_xspace.setText(xspace_default)
+        yspace_default = self.config.get('Space', 'y_space', fallback="10")
+        self.textbox_yspace.setText(yspace_default)
+        zspace_default = self.config.get('Space', 'z_space', fallback="1")
+        self.textbox_zspace.setText(zspace_default)
+        xtime_default = self.config.get('Time', 'x_time', fallback="3600")
+        self.textbox_xtime.setText(xtime_default)
+        ytime_default = self.config.get('Time', 'y_time', fallback="10")
+        self.textbox_ytime.setText(ytime_default)
+        ztime_default = self.config.get('Time', 'z_time', fallback="3600")
+        self.textbox_ztime.setText(ztime_default)
 
     def create_line_edit(self, placeholder_text):
         textbox = QLineEdit()
@@ -67,29 +86,29 @@ class App(QMainWindow):
 
         # Source directory layout
         self.textbox_sourcedir = self.create_line_edit("Insert source directory path")
-        self.button_sourcedir = self.create_button(self.on_click_sourcedir_button)
-        horizontalSourceLayout = self.create_horizontal_layout([self.textbox_sourcedir, self.button_sourcedir])
+        button_sourcedir = self.create_button(self.on_click_sourcedir_button)
+        horizontalSourceLayout = self.create_horizontal_layout([self.textbox_sourcedir, button_sourcedir])
         groupSourceDirectoryPath = self.create_group_box("Source directory path", horizontalSourceLayout)
         scrollLayout.addWidget(groupSourceDirectoryPath)
 
         # Destination directory layout
-        textbox_destdir = self.create_line_edit("Insert destination directory path")
+        self.textbox_destdir = self.create_line_edit("Insert destination directory path")
         button_destdir = self.create_button(self.on_click_destdir_button)
-        horizontalDestinationLayout = self.create_horizontal_layout([textbox_destdir, button_destdir])
+        horizontalDestinationLayout = self.create_horizontal_layout([self.textbox_destdir, button_destdir])
         groupDestinationDirectoryPath = self.create_group_box("Destination directory path", horizontalDestinationLayout)
         scrollLayout.addWidget(groupDestinationDirectoryPath)
 
         # Known places file path
-        textbox_placespath = self.create_line_edit("Insert known places file path")
+        self.textbox_placespath = self.create_line_edit("Insert known places file path")
         button_placespath = self.create_button(self.on_click_placesfilepath_button)
-        horizontalPlacesLayout = self.create_horizontal_layout([textbox_placespath, button_placespath])
+        horizontalPlacesLayout = self.create_horizontal_layout([self.textbox_placespath, button_placespath])
         groupKnownPlacesPath = self.create_group_box("Known places file path", horizontalPlacesLayout)
         scrollLayout.addWidget(groupKnownPlacesPath)
 
         # Home Location section
         # Create the latitude and longitude line edits
-        textbox_homelat = self.create_line_edit("Insert home location latitude")
-        textbox_homelon = self.create_line_edit("Insert home location longitude")
+        self.textbox_homelat = self.create_line_edit("Insert home location latitude")
+        self.textbox_homelon = self.create_line_edit("Insert home location longitude")
         # Create the labels for latitude and longitude
         label_lat = QLabel("Latitude:")
         label_lon = QLabel("Longitude:")
@@ -97,9 +116,9 @@ class App(QMainWindow):
         # Create a single horizontal layout to contain both the latitude and longitude layouts
         homeLocationLayout = QHBoxLayout()
         homeLocationLayout.addWidget(label_lat)
-        homeLocationLayout.addWidget(textbox_homelat)
+        homeLocationLayout.addWidget(self.textbox_homelat)
         homeLocationLayout.addWidget(label_lon)
-        homeLocationLayout.addWidget(textbox_homelon)
+        homeLocationLayout.addWidget(self.textbox_homelon)
 
         # Create the group box for the home location section and add it to the scroll layout
         groupBoxHomeLocation = QGroupBox("Home Location")
@@ -112,17 +131,17 @@ class App(QMainWindow):
 
         # Space Options section
         # Create text boxes with placeholder text
-        textbox_xspace = self.create_line_edit("2")
-        textbox_yspace = self.create_line_edit("10")
-        textbox_zspace = self.create_line_edit("1")
+        self.textbox_xspace = self.create_line_edit("2")
+        self.textbox_yspace = self.create_line_edit("10")
+        self.textbox_zspace = self.create_line_edit("1")
         # Create labels for each text box
         label_xspace = QLabel("(X) kms between pics:")
         label_yspace = QLabel("(Y) kms from home:")
         label_zspace = QLabel("(Z) kms where to start:")
         # Create horizontal layouts for each set of label and text box
-        xSpaceLayout = self.create_horizontal_layout([label_xspace, textbox_xspace])
-        ySpaceLayout = self.create_horizontal_layout([label_yspace, textbox_yspace])
-        zSpaceLayout = self.create_horizontal_layout([label_zspace, textbox_zspace])
+        xSpaceLayout = self.create_horizontal_layout([label_xspace, self.textbox_xspace])
+        ySpaceLayout = self.create_horizontal_layout([label_yspace, self.textbox_yspace])
+        zSpaceLayout = self.create_horizontal_layout([label_zspace, self.textbox_zspace])
         # Create the explanation label
         spaceExplanationLabel = QLabel("Pics far away X kms from each others\n and Y kms away from home are put together.\nZ are the kms away from home where to start the calculation\n about space.")
         # Create the vertical layout and add the explanation label and the three horizontal layouts
@@ -137,17 +156,17 @@ class App(QMainWindow):
 
         # Time Options section
         # Create text boxes with placeholder text for time options
-        textbox_xtime = self.create_line_edit("3600")
-        textbox_ytime = self.create_line_edit("10")
-        textbox_ztime = self.create_line_edit("3600")
+        self.textbox_xtime = self.create_line_edit("3600")
+        self.textbox_ytime = self.create_line_edit("10")
+        self.textbox_ztime = self.create_line_edit("3600")
         # Create labels for each time option
         label_xtime = QLabel("(X) sec between pics:")
         label_ytime = QLabel("(Y) kms from home:")
         label_ztime = QLabel("(Z) sec when to start:")
         # Create horizontal layouts for each set of label and text box
-        xTimeLayout = self.create_horizontal_layout([label_xtime, textbox_xtime])
-        yTimeLayout = self.create_horizontal_layout([label_ytime, textbox_ytime])
-        zTimeLayout = self.create_horizontal_layout([label_ztime, textbox_ztime])
+        xTimeLayout = self.create_horizontal_layout([label_xtime, self.textbox_xtime])
+        yTimeLayout = self.create_horizontal_layout([label_ytime, self.textbox_ytime])
+        zTimeLayout = self.create_horizontal_layout([label_ztime, self.textbox_ztime])
         # Create the explanation label for the time options
         timeExplanationLabel = QLabel("Pics far away X seconds from each others\n and Y kms away from home are put together.\nZ are the seconds when to start the calculation\n about time.")
         # Create the vertical layout and add the explanation label and the horizontal layouts for time options
@@ -245,4 +264,4 @@ class App(QMainWindow):
             self, "Open places.txt file", "", "Text file (*.txt)"
         )
         if fileName:
-            self.textbox_placesfilepath.setText(fileName)
+            self.textbox_placespath.setText(fileName)
