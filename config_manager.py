@@ -2,7 +2,7 @@ import configparser
 
 
 class ConfigManager:
-    def __init__(self, config_file_path="config/config.cfg"):
+    def __init__(self, config_file_path="config.cfg"):
         self.config_file_path = config_file_path
         self.config = configparser.ConfigParser()
         self.load_config()
