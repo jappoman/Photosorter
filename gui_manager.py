@@ -25,7 +25,7 @@ class App(QMainWindow):
         destdir_default = self.config.get('Directories', 'destination_dir', fallback="./destination")
         self.textbox_destdir.setText(destdir_default)
         placespath_default = self.config.get('Places', 'places_file_path', fallback="./known_places.txt")
-        self.textbox_placespath.setText(placespath_default)
+        self.textbox_placesfilepath.setText(placespath_default)
         homelat_default = self.config.get('Home', 'home_lat', fallback="0")
         self.textbox_homelat.setText(homelat_default)
         homelon_default = self.config.get('Home', 'home_lon', fallback="0")
@@ -72,7 +72,7 @@ class App(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle("Photosorter")
-        self.setWindowIcon(QIcon(":/icon.ico"))
+        self.setWindowIcon(QIcon("./assets/icon.ico"))
 
         centralWidget = QWidget(self)
         self.setCentralWidget(centralWidget)
@@ -86,22 +86,22 @@ class App(QMainWindow):
 
         # Source directory layout
         self.textbox_sourcedir = self.create_line_edit("Insert source directory path")
-        button_sourcedir = self.create_button(self.on_click_sourcedir_button)
-        horizontalSourceLayout = self.create_horizontal_layout([self.textbox_sourcedir, button_sourcedir])
+        self.button_sourcedir = self.create_button(self.on_click_sourcedir_button)
+        horizontalSourceLayout = self.create_horizontal_layout([self.textbox_sourcedir, self.button_sourcedir])
         groupSourceDirectoryPath = self.create_group_box("Source directory path", horizontalSourceLayout)
         scrollLayout.addWidget(groupSourceDirectoryPath)
 
         # Destination directory layout
         self.textbox_destdir = self.create_line_edit("Insert destination directory path")
-        button_destdir = self.create_button(self.on_click_destdir_button)
-        horizontalDestinationLayout = self.create_horizontal_layout([self.textbox_destdir, button_destdir])
+        self.button_destdir = self.create_button(self.on_click_destdir_button)
+        horizontalDestinationLayout = self.create_horizontal_layout([self.textbox_destdir, self.button_destdir])
         groupDestinationDirectoryPath = self.create_group_box("Destination directory path", horizontalDestinationLayout)
         scrollLayout.addWidget(groupDestinationDirectoryPath)
 
         # Known places file path
-        self.textbox_placespath = self.create_line_edit("Insert known places file path")
-        button_placespath = self.create_button(self.on_click_placesfilepath_button)
-        horizontalPlacesLayout = self.create_horizontal_layout([self.textbox_placespath, button_placespath])
+        self.textbox_placesfilepath = self.create_line_edit("Insert known places file path")
+        self.button_placesfilepath = self.create_button(self.on_click_placesfilepath_button)
+        horizontalPlacesLayout = self.create_horizontal_layout([self.textbox_placesfilepath, self.button_placesfilepath])
         groupKnownPlacesPath = self.create_group_box("Known places file path", horizontalPlacesLayout)
         scrollLayout.addWidget(groupKnownPlacesPath)
 
@@ -222,7 +222,7 @@ class App(QMainWindow):
         mainLayout.addWidget(scroll)
 
         # Ridimensionabile e reattivo
-        self.setMinimumSize(850, 480)  # Imposta una dimensione minima per la finestra principale
+        self.setMinimumSize(650, 660)  # Imposta una dimensione minima per la finestra principale
 
     def closeEvent(self, event):
         # when closing, kill the program
@@ -236,7 +236,7 @@ class App(QMainWindow):
             self.textbox_destdir, self.button_destdir,
             self.textbox_placesfilepath, self.button_placesfilepath,
             self.textbox_homelat, self.textbox_homelon,
-            self.textbox_xpsace, self.textbox_ypsace, self.textbox_zpsace,
+            self.textbox_xspace, self.textbox_yspace, self.textbox_zspace,
             self.textbox_xtime, self.textbox_ytime, self.textbox_ztime,
             self.button_start, self.check_dictionarymode, self.check_movefile
         ]
@@ -264,4 +264,4 @@ class App(QMainWindow):
             self, "Open places.txt file", "", "Text file (*.txt)"
         )
         if fileName:
-            self.textbox_placespath.setText(fileName)
+            self.textbox_placesfilepath.setText(fileName)

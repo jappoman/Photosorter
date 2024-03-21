@@ -1,7 +1,7 @@
 /__pycache__
 /itchio
 /build
-/config/config.cfg
-/config/places_to_replace.txt
+/config/my_config.cfg
+/config/my_places_to_replace.txt
 /dist
 /generate_exec

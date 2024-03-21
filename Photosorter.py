@@ -20,13 +20,13 @@ def main(app_instance):
     else:
         home_location = (0,0)
     #space coefficient
-    if (app_instance.textbox_xpsace.text()!='' and app_instance.textbox_ypsace.text()!=''):
-        space_coefficient = int(app_instance.textbox_xpsace.text())/int(app_instance.textbox_ypsace.text())
+    if (app_instance.textbox_xspace.text()!='' and app_instance.textbox_yspace.text()!=''):
+        space_coefficient = int(app_instance.textbox_xspace.text())/int(app_instance.textbox_yspace.text())
     else:
         space_coefficient = 1
     #space offset
-    if(app_instance.textbox_zpsace.text()!=''):
-        space_offset = int(app_instance.textbox_zpsace.text())
+    if(app_instance.textbox_zspace.text()!=''):
+        space_offset = int(app_instance.textbox_zspace.text())
     else:
         space_offset = 0
     #time coefficient
@@ -271,7 +271,7 @@ def main(app_instance):
             app_instance.textbox_destdir, app_instance.button_destdir,
             app_instance.textbox_placesfilepath, app_instance.button_placesfilepath,
             app_instance.textbox_homelat, app_instance.textbox_homelon,
-            app_instance.textbox_xpsace, app_instance.textbox_ypsace, app_instance.textbox_zpsace,
+            app_instance.textbox_xspace, app_instance.textbox_yspace, app_instance.textbox_zspace,
             app_instance.textbox_xtime, app_instance.textbox_ytime, app_instance.textbox_ztime,
             app_instance.button_start, app_instance.check_dictionarymode, app_instance.check_movefile
         ]
@@ -287,7 +287,7 @@ def main(app_instance):
             app_instance.textbox_destdir, app_instance.button_destdir,
             app_instance.textbox_placesfilepath, app_instance.button_placesfilepath,
             app_instance.textbox_homelat, app_instance.textbox_homelon,
-            app_instance.textbox_xpsace, app_instance.textbox_ypsace, app_instance.textbox_zpsace,
+            app_instance.textbox_xspace, app_instance.textbox_yspace, app_instance.textbox_zspace,
             app_instance.textbox_xtime, app_instance.textbox_ytime, app_instance.textbox_ztime,
             app_instance.button_start, app_instance.check_dictionarymode, app_instance.check_movefile
         ]
@@ -305,16 +305,9 @@ def main(app_instance):
 if __name__ == "__main__":
     app = QApplication([])
     
-    # Carica la configurazione
     config = ConfigManager().config
-    
-    # Crea l'istanza dell'applicazione e passa la configurazione
     ex = App(config)
-
-    ex.show()
-    app.exec_()
-
-    # Connetti il segnale alla funzione principale
     ex.startSortingSignal.connect(lambda: main(ex))
     
+    ex.show()
     sys.exit(app.exec_())
