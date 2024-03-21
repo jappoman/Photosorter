@@ -39,15 +39,15 @@ jobs:
           - os: macos-latest
             TARGET: macos
             CMD_BUILD: >
-                pyinstaller -F -w -n clipster -i resources/clipster.icns cli.py &&
+                pyinstaller -F -w -n Photosorter -i assets/icon.ico photosorter.py &&
                 cd dist/ &&
-                zip -r9 clipster clipster.app/                
-            OUT_FILE_NAME: clipster.zip
+                zip -r9 photosorter photosorter.app/                
+            OUT_FILE_NAME: photosorter.zip
             ASSET_MIME: application/zip
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: pyinstaller -F -w -n clipster -i resources/clipster.ico cli.py
-            OUT_FILE_NAME: clipster.exe
+            CMD_BUILD: pyinstaller -F -w -n Photosorter -i assets/icon.ico photosorter.py
+            OUT_FILE_NAME: Photosorter.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
     - uses: actions/checkout@v1
