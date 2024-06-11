@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -19,10 +20,12 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
       - name: Output Release URL File
         run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+
       - name: Save Release URL File for publish
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: release_url
           path: release_url.txt
@@ -34,33 +37,30 @@ jobs:
         os: [windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
+
       - name: Install PyInstaller
         run: pip install pyinstaller
-      - name: Build Executable with PyInstaller Action
-        uses: sayyid5416/pyinstaller@v1
-        with:
-          python_ver: '3.8'
-          spec: 'your_spec_file.spec' # Adjust this to your .spec file path or leave it if not using a spec file.
-          requirements: 'requirements.txt'
-          upload_exe_with_name: 'Photosorter' # This might need to be adjusted based on action functionality.
-          options: '--onefile --windowed --icon assets/icon.ico --name "Photosorter"'
+
+      - name: Build Executable with PyInstaller
+        run: |
+          pyinstaller --onefile --windowed --icon assets/icon.ico --name "Photosorter" your_spec_file.spec
 
       - name: Load Release URL File from release job
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: release_url
 
       - name: Get Release File Name & Upload URL
         id: get_release_info
-        shell: bash
         run: |
-          value=`cat release_url/release_url.txt`
-          echo ::set-output name=upload_url::$value        
+          value=$(cat release_url/release_url.txt)
+          echo "::set-output name=upload_url::$value"
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
@@ -68,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-          asset_path: ./dist/Photosorter # Adjust this path based on where the action saves the executable
-          asset_name: Photosorter.exe # Adjust the file name based on your output
-          asset_content_type: application/vnd.microsoft.portable-executable # Or use application/zip for macOS if needed
+          asset_path: ./dist/Photosorter # Adjust this path based on where PyInstaller saves the executable
+          asset_name: Photosorter${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+          asset_content_type: application/${{ matrix.os == 'windows-latest' && 'vnd.microsoft.portable-executable' || 'zip' }}
